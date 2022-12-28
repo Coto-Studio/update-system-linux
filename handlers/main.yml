@@ -1,2 +1,9 @@
 ---
 # handlers file for update-system-linux
+- name: Upgrade system packages
+  become: true
+  package:
+    upgrade: true
+    autoremove: true
+    autoclean: true
+    cache_valid_time: 3600

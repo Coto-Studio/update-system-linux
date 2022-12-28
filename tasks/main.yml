@@ -1,2 +1,10 @@
 ---
 # tasks file for update-system-linux
+---
+- name: Update package manager cache
+  become: true
+  package:
+    update_cache: true
+    cache_valid_time: 3600
+  register: updaded_packages
+  notify: Upgrade system packages
