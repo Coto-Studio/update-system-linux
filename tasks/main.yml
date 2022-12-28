@@ -1,6 +1,5 @@
 ---
 # tasks file for update-system-linux
----
 - name: Update package manager cache
   become: true
   package:
