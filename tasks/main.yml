@@ -6,4 +6,12 @@
     update_cache: true
     cache_valid_time: 3600
   register: updaded_packages
-  notify: Upgrade system packages
+
+- name: Upgrade system packages
+  become: true
+  package:
+    upgrade: true
+    autoremove: true
+    autoclean: true
+    cache_valid_time: 3600
+  when: updaded_packages.changed
