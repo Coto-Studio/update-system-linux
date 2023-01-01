@@ -1,2 +1,3 @@
 ---
 # defaults file for update-system-linux
+system_install_packages: []

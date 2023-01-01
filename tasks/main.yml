@@ -15,3 +15,9 @@
     autoclean: true
     cache_valid_time: 3600
   when: updaded_packages.changed
+
+- name: Ensure System Packages are installed
+  package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ system_install_packages }}"
