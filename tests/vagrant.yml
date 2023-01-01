@@ -1,0 +1,12 @@
+---
+- hosts: all
+  remote_user: vagrant
+  become: true
+
+  vars:
+    system_install_packages:
+      - wireguard
+      - nginx
+
+  roles:
+    - ../../

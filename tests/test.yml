@@ -1,5 +1,11 @@
 ---
 - hosts: localhost
   remote_user: root
+
+  vars:
+    system_install_packages:
+      - wiregaurd
+      - nginx
+
   roles:
     - update-system-linux
