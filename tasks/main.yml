@@ -14,7 +14,25 @@
     autoremove: true
     autoclean: true
     cache_valid_time: 3600
+  async: 600
+  poll: 0
+  register: upgrade_async
   when: updaded_packages.changed
+
+- name: Wait for connection to recover after upgrade
+  wait_for_connection:
+    delay: 15
+    timeout: 300
+  when: updaded_packages.changed
+
+- name: Check upgrade completed successfully
+  async_status:
+    jid: "{{ upgrade_async.ansible_job_id }}"
+  register: upgrade_result
+  until: upgrade_result.finished
+  retries: 30
+  delay: 10
+  when: updaded_packages.changed and upgrade_async.ansible_job_id is defined
 
 - name: Ensure System Packages are installed
   become: true
