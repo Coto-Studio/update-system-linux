@@ -9,8 +9,8 @@
 
 - name: Upgrade system packages
   become: true
-  package:
-    upgrade: true
+  apt:
+    upgrade: dist
     autoremove: true
     autoclean: true
     cache_valid_time: 3600
@@ -32,7 +32,17 @@
   until: upgrade_result.finished
   retries: 30
   delay: 10
+  become: true
   when: updaded_packages.changed and upgrade_async.ansible_job_id is defined
+  ignore_errors: true
+
+- name: Verify system is in clean state
+  become: true
+  command: dpkg --audit
+  register: dpkg_audit
+  changed_when: false
+  failed_when: dpkg_audit.stdout | length > 0
+  when: updaded_packages.changed
 
 - name: Ensure System Packages are installed
   become: true
